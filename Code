@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+public class RestaurantOrder {
+
+    // Method to display the menu
+    public static void displayMenu() {
+        System.out.println("Menu:");
+        System.out.println("1. Burger - $5.99");
+        System.out.println("2. Pizza - $8.99");
+        System.out.println("3. Salad - $4.99");
+        System.out.println("4. Soda - $1.99");
+    }
+
+    // Method to get the price of an item based on selection
+    public static double getItemPrice(int itemNumber) {
+        switch (itemNumber) {
+            case 1:
+                return 5.99;  // Burger price
+            case 2:
+                return 8.99;  // Pizza price
+            case 3:
+                return 4.99;  // Salad price
+            case 4:
+                return 1.99;  // Soda price
+            default:
+                return 0.0;   // Invalid item
+        }
+    }
+
+    // Method to take an order from the user
+    public static void takeOrder() {
+        Scanner scanner = new Scanner(System.in);
+        double totalCost = 0.0;
+        
+        System.out.println("Enter the item number to order (0 to finish): ");
+        
+        while (true) {
+            int choice = scanner.nextInt();
+            if (choice == 0) break;
+            
+            // Call getItemPrice() and update totalCost
+            double itemPrice = getItemPrice(choice);
+            if (itemPrice > 0) {
+                totalCost += itemPrice;
+                System.out.println("Item added. Current total: $" + totalCost);
+            } else {
+                System.out.println("Invalid item number. Please try again.");
+            }
+        }
+
+        // Display total cost
+        System.out.println("Final total cost: $" + totalCost);
+        
+        // Call calculateTotal to apply discount (if any)
+        double finalTotal = calculateTotal(totalCost);
+        System.out.println("Total after discount: $" + finalTotal);
+    }
+
+    // Overloaded method to apply a discount (no discount by default)
+    public static double calculateTotal(double totalCost) {
+        return totalCost;
+    }
+
+    // Overloaded method to apply a discount (with discount parameter)
+    public static double calculateTotal(double totalCost, double discount) {
+        return totalCost - (totalCost * discount / 100);
+    }
+
+    // Main method to run the program
+    public static void main(String[] args) {
+        displayMenu();
+        takeOrder();
+    }
+}
